@@ -19,8 +19,10 @@ export class HeroService {
 
   getHeroes(): Observable<Hero[]> {
     this.messageService.add('HeroService: fetched heroes');
-    return this.http.get<Hero[]>(this.heroesUrl);
-  }
+    return this.http.get<Hero[]>(this.heroesUrl).pipe(
+      catchError(this.handleError('getHeroes', []))
+      );
+    }
 
   getHero(id: number): Observable<Hero> {
     // TODO: send the message _after_ fetching the hero
